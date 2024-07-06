@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/refer', require('./routes/refer'));
 
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err);

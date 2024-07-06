@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
             },
         })
         if (existingUser) {
-            return res.status(409).json({ error: 'User with this email already exists' });
+            return res.status(409).json({ message: 'User with this email already exists' });
         }
 
         // Validate the referring_code
@@ -23,7 +23,7 @@ exports.signup = async (req, res) => {
                 where: { referral_code: referring_code },
             });
             if (!referringUser) {
-                return res.status(400).json({ error: 'Invalid referral code.'});
+                return res.status(400).json({ message: 'Invalid referral code.'});
             }
             referredByUser = referringUser;
         }
@@ -83,7 +83,7 @@ exports.login = async (req, res) => {
         });
 
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ error: 'Invalid Email/password' });
+            return res.status(401).json({ message: 'Invalid Email/password' });
         }
 
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
